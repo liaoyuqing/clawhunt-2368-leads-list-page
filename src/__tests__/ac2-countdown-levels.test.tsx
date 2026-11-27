@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import { ROLE_STORAGE_KEY } from '../features/sales/leads/demoSession';
+import { useRole } from './testSetupHelpers';
 import { countdownLevel, formatCountdown, hasRecycleCountdown } from '../features/sales/leads/countdown';
 import { renderAt, waitForRows } from './renderPage';
 
@@ -36,7 +36,7 @@ describe('AC2 距回收倒计时分级与着色', () => {
   });
 
   it('ac2-countdown-levels: 列表行按 daysLeft 渲染红色/橙色倒计时文案', async () => {
-    window.localStorage.setItem(ROLE_STORAGE_KEY, 'advisor');
+    useRole('advisor');
     renderAt('');
     await waitForRows();
 
@@ -62,7 +62,7 @@ describe('AC2 距回收倒计时分级与着色', () => {
   });
 
   it('ac2-countdown-levels: 公海与合同阶段的距回收列显示「—」且不着色', async () => {
-    window.localStorage.setItem(ROLE_STORAGE_KEY, 'advisor');
+    useRole('advisor');
     renderAt('?stage=public_pool,contract&size=100');
     await waitForRows();
     await waitFor(() => expect(screen.getAllByTestId(/^countdown-L-/).length).toBeGreaterThan(10));

@@ -3,7 +3,7 @@ import { Button, Pagination, Select } from 'tdesign-react';
 import { leadsApi } from '../../../api/client';
 import type { Advisor, LeadRow, RoleName } from '../../../api/types';
 import BulkTransferDialog, { type TransferTarget } from '../../../components/BulkTransferDialog';
-import { setMockFailure } from '../../../features/sales/leads/demoSession';
+import { isMockFailureOn, setMockFailure } from '../../../features/sales/leads/demoSession';
 import {
   CHANNEL_OPTIONS,
   type LeadFilters,
@@ -66,16 +66,25 @@ function TableSkeleton() {
 interface ErrorStateProps {
   message: string;
   onRetry: () => void;
+  /** 演示开关打开时给出的「恢复」入口：清掉开关再重试，避免停在坏状态里出不来 */
+  onRecoverDemo?: () => void;
 }
 
-function ErrorState({ message, onRetry }: ErrorStateProps) {
+function ErrorState({ message, onRetry, onRecoverDemo }: ErrorStateProps) {
   return (
     <div className="state-box state-box--error" data-testid="leads-error" role="alert">
       <p className="state-box__title">线索加载失败</p>
       <p className="state-box__text">{message}</p>
-      <Button theme="primary" variant="outline" onClick={onRetry}>
-        重试
-      </Button>
+      <div className="state-box__actions">
+        <Button theme="primary" variant="outline" onClick={onRetry}>
+          重试
+        </Button>
+        {onRecoverDemo && (
+          <Button theme="default" variant="outline" onClick={onRecoverDemo}>
+            关闭演示开关并重试
+          </Button>
+        )}
+      </div>
     </div>
   );
 }
@@ -109,6 +118,8 @@ export default function LeadsPage() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [transferVisible, setTransferVisible] = useState(false);
   const [advisors, setAdvisors] = useState<Advisor[]>([]);
+  // 恢复入口不受演示控件开关影响：只要异常开关真的处于打开状态，页面上就给出口
+  const demoFailureOn = isMockFailureOn();
 
   useEffect(() => {
     let alive = true;
@@ -301,7 +312,18 @@ export default function LeadsPage() {
 
       <section className="card">
         {status === 'error' ? (
-          <ErrorState message={errorText} onRetry={() => setReloadToken((token) => token + 1)} />
+          <ErrorState
+            message={errorText}
+            onRetry={() => setReloadToken((token) => token + 1)}
+            onRecoverDemo={
+              demoFailureOn
+                ? () => {
+                    setMockFailure(false);
+                    setReloadToken((token) => token + 1);
+                  }
+                : undefined
+            }
+          />
         ) : status === 'loading' && rows.length === 0 ? (
           <TableSkeleton />
         ) : (

@@ -1,9 +1,7 @@
 import { screen } from '@testing-library/react';
-import { FAIL_STORAGE_KEY, ROLE_STORAGE_KEY } from '../features/sales/leads/demoSession';
+import { useRole } from './testSetupHelpers';
 import { roleMatrix } from '../features/sales/leads/roleMatrix';
 import { renderAt, waitForRole, waitForRows } from './renderPage';
-
-void FAIL_STORAGE_KEY;
 
 function headerText(): string {
   const head = document.querySelector('thead');
@@ -16,7 +14,7 @@ function headerCellCount(): number {
 
 describe('AC1 顾问视角与主管视角的列/按钮差异', () => {
   it('ac1-role-matrix-columns: 顾问视角不渲染负责人列与批量转派按钮', async () => {
-    window.localStorage.setItem(ROLE_STORAGE_KEY, 'advisor');
+    useRole('advisor');
     renderAt('');
     await waitForRole('顾问视角');
     await waitForRows();
@@ -38,7 +36,7 @@ describe('AC1 顾问视角与主管视角的列/按钮差异', () => {
   });
 
   it('ac1-role-matrix-columns: 主管视角渲染负责人列、勾选列与批量转派按钮', async () => {
-    window.localStorage.setItem(ROLE_STORAGE_KEY, 'supervisor');
+    useRole('supervisor');
     renderAt('');
     await waitForRole('主管视角');
     await waitForRows();

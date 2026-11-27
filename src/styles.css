@@ -210,6 +210,7 @@ body {
 .state-box__title { margin: 0; font-size: 15px; font-weight: 600; }
 .state-box__text { margin: 0; color: var(--text-weak); font-size: 13px; }
 .state-box--error .state-box__title { color: var(--danger); }
+.state-box__actions { display: flex; gap: 8px; margin-top: 4px; }
 
 .skeleton { padding: 8px 0; }
 

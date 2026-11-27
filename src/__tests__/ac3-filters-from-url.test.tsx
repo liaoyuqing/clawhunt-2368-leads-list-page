@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import { ROLE_STORAGE_KEY } from '../features/sales/leads/demoSession';
+import { useRole } from './testSetupHelpers';
 import { server } from '../mocks/node';
 import { captureApi, type ApiHit, hitsFor, lastHit } from './apiCapture';
 import { renderAt, waitForRole, waitForRows } from './renderPage';
@@ -16,7 +16,7 @@ async function waitForLeadsRequests(hits: ApiHit[], count: number): Promise<void
 
 describe('AC3 筛选条件同步 URL 且刷新后从 URL 恢复', () => {
   it('ac3-filters-from-url: 带 query 打开页面，条件既进请求参数也回填到界面控件', async () => {
-    window.localStorage.setItem(ROLE_STORAGE_KEY, 'advisor');
+    useRole('advisor');
     const hits = captureApi(server);
     renderAt('?stage=qualified,negotiating&source=referral&recycle=soon&size=50&sort=followedAt:asc');
     await waitForRole('顾问视角');
@@ -47,7 +47,7 @@ describe('AC3 筛选条件同步 URL 且刷新后从 URL 恢复', () => {
   });
 
   it('ac3-filters-from-url: 刷新（卸载后重新挂载、内存态清零）仍按同一 URL 条件请求', async () => {
-    window.localStorage.setItem(ROLE_STORAGE_KEY, 'advisor');
+    useRole('advisor');
     const hits = captureApi(server);
     const first = renderAt('?stage=contacted&sort=followedAt:desc&keyword=' + encodeURIComponent('科技'));
     await waitForRole('顾问视角');
@@ -72,7 +72,7 @@ describe('AC3 筛选条件同步 URL 且刷新后从 URL 恢复', () => {
   });
 
   it('ac3-filters-from-url: page / size 分页参数从 URL 恢复', async () => {
-    window.localStorage.setItem(ROLE_STORAGE_KEY, 'advisor');
+    useRole('advisor');
     const hits = captureApi(server);
     renderAt('?page=2&size=20');
     await waitForRole('顾问视角');
@@ -86,7 +86,7 @@ describe('AC3 筛选条件同步 URL 且刷新后从 URL 恢复', () => {
   });
 
   it('ac3-filters-from-url: 非法 query 不白屏，回落默认条件', async () => {
-    window.localStorage.setItem(ROLE_STORAGE_KEY, 'advisor');
+    useRole('advisor');
     const hits = captureApi(server);
     renderAt('?stage=archived&source=fax&spaceType=space_station&sort=id:asc&page=0&size=999&recycle=maybe&reportedFrom=2026/11/01');
     await waitForRole('顾问视角');

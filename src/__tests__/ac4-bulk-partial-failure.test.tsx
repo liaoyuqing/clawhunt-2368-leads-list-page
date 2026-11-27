@@ -1,5 +1,5 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
-import { ROLE_STORAGE_KEY } from '../features/sales/leads/demoSession';
+import { useRole } from './testSetupHelpers';
 import { server } from '../mocks/node';
 import { captureApi, type ApiHit } from './apiCapture';
 import { renderAt, waitForRole, waitForRows } from './renderPage';
@@ -37,7 +37,7 @@ async function openDialogAndPickAdvisor(): Promise<HTMLElement> {
 
 describe('AC4 批量转派部分失败时逐条展示失败原因', () => {
   it('ac4-bulk-partial-failure: 9 条里 2 条失败，逐条列出企业名与失败原因', async () => {
-    window.localStorage.setItem(ROLE_STORAGE_KEY, 'supervisor');
+    useRole('supervisor');
     const hits = captureApi(server);
     renderAt('');
     await waitForRole('主管视角');
@@ -82,7 +82,7 @@ describe('AC4 批量转派部分失败时逐条展示失败原因', () => {
   });
 
   it('ac4-bulk-partial-failure: 失败项可单独重试，重试不影响已成功项', async () => {
-    window.localStorage.setItem(ROLE_STORAGE_KEY, 'supervisor');
+    useRole('supervisor');
     const hits = captureApi(server);
     renderAt('');
     await waitForRole('主管视角');
@@ -115,7 +115,7 @@ describe('AC4 批量转派部分失败时逐条展示失败原因', () => {
   });
 
   it('ac4-bulk-partial-failure: 全部成功时不显示失败明细', async () => {
-    window.localStorage.setItem(ROLE_STORAGE_KEY, 'supervisor');
+    useRole('supervisor');
     const hits = captureApi(server);
     renderAt('');
     await waitForRole('主管视角');

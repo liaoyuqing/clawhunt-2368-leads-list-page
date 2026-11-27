@@ -15,7 +15,7 @@
 ```bash
 npm install
 npm run dev        # http://localhost:5173 ，首屏即 /sales/leads 页面
-npm test           # 17 条组件测试
+npm test           # 23 条组件测试（AC 四条 + 安全回归）
 npm run typecheck  # tsc --noEmit
 npm run build      # 产物在 dist/
 npm run preview    # 预览构建产物，http://localhost:4173
@@ -35,7 +35,9 @@ npm run preview    # 预览构建产物，http://localhost:4173
 | 行勾选列 / 「批量转派」按钮 | 不渲染 | 渲染 |
 | 排序、分页、其余筛选 | 有 | 有 |
 
-演示时用页面右上角的「视角」下拉切换（写入 `localStorage` 的 `leads-demo-role`），真实环境由 S2-IAM 下发 `/api/me` 的 role 决定。
+演示时用页面右上角的「视角」下拉切换（写入 `sessionStorage` 的 `leads-demo-role`，关标签页即失效），真实环境由 S2-IAM 下发 `/api/me` 的 role 决定。
+
+筛选、列、按钮、勾选列全部由 `roleMatrix(role)` 一次算出，测试 `ac1-role-matrix-columns` 直接断言这个矩阵，而不是逐个查 DOM 猜。
 
 ## 表格列
 
@@ -103,7 +105,7 @@ PATCH /api/sales/leads/{id}/owner     -> { id, ownerId, ownerName }   body: { ow
 - 空：`leads-empty`，附「清空筛选」
 - 接口错误：`leads-error`（红色标题 + 后端 message + 「重试」），错误时隐藏分页与批量入口
 
-复现接口错误：页面右上角点「模拟接口错误」（写 `localStorage` 的 `leads-demo-fail=1` 后刷新），或在 DevTools 里手动 `localStorage.setItem('leads-demo-fail','1')` 再刷新。
+复现接口错误：页面右上角点「模拟接口错误」。开关写在 `sessionStorage`（`leads-demo-fail=1` + `leads-demo-fail-until`），只对当前标签页有效，并带 5 分钟 TTL：到期自动失效、键自动清除；错误态本身也常驻一个「关闭演示开关并重试」按钮，点它即清开关并重新请求，页面不会因为忘关开关而卡死。
 
 ## 测试
 
@@ -114,8 +116,12 @@ PATCH /api/sales/leads/{id}/owner     -> { id, ownerId, ownerName }   body: { ow
 | `src/__tests__/ac3-filters-from-url.test.tsx` | query → 请求参数与控件回填、卸载重挂载后保持一致、分页、非法值回落 |
 | `src/__tests__/ac4-bulk-partial-failure.test.tsx` | 9 条中 2 条失败逐条展示原因、仅重试失败、全成功无失败明细 |
 | `src/__tests__/states-loading-empty-error.test.tsx` | 骨架、空态、503 错误态与重试、排序写回 URL |
+| `src/__tests__/safety-demo-switch.test.tsx` | 异常开关 TTL 到期自清、关闭即清键、错误态一键恢复列表 |
+| `src/__tests__/safety-mock-isolation.test.ts` | 生产代码不引用 mock、基准日只由 mock 时钟解析、时钟可被 `VITE_MOCK_DATE` 钉住 |
 
-测试断言不只查界面文字，`src/__tests__/apiCapture.ts` 会记录组件真实发出的请求，用来证明「条件真的进了请求参数」。
+共 7 个文件 23 条用例，`npm test` 全绿。
+
+测试断言不只查界面文字，`src/__tests__/apiCapture.ts` 会记录组件真实发出的请求，用来证明「条件真的进了请求参数」；`src/__tests__/testSetupHelpers.ts` 让用例通过 `useRole` / `useMockFailure` 切换演示状态，与实现共用同一套键名与 TTL 语义。
 
 ## 截图
 
@@ -135,9 +141,9 @@ PATCH /api/sales/leads/{id}/owner     -> { id, ownerId, ownerName }   body: { ow
 `docs/checks/` 里是从仓库全新克隆后实跑的四条命令原始输出，以及截图采集与 AC 取数日志：
 
 - `01-npm-install.log`（added 254 packages，退出码 0）
-- `02-npm-test.log`（Test Files 5 passed / Tests 17 passed，退出码 0）
+- `02-npm-test.log`（Test Files 7 passed / Tests 23 passed，退出码 0）
 - `03-tsc.log`（空文件 = 无任何类型错误，退出码 0）
-- `04-vite-build.log`（4144 modules，built in 26.72s，退出码 0）
+- `04-vite-build.log`（4145 modules，built in 25.73s，退出码 0）
 - `05-screenshot-capture.log`（截图脚本逐场景打印的表头、色值、query、转派结果）
 - `ac-evidence.log`（按 AC 归类的机器可读取值：顾问 8 列 / 主管 10 列、倒计时 data-level 与 rgb 色值、刷新前后 location.search 与筛选摘要逐字段相等、转派汇总与两条失败原因）
 
@@ -152,11 +158,13 @@ src/
   features/sales/leads/   filters（URL 编解码）、countdown、roleMatrix、useUrlFilters、useSession、demoSession
   mocks/        handlers（含 409/403 失败分支）、68 条虚构线索
   pages/sales/leads/      FilterBar、LeadsTable、页面骨架与三态
-  __tests__/    5 个测试文件 + 渲染与请求捕获辅助
+  __tests__/    7 个测试文件 + 渲染/请求捕获/演示开关辅助
 docs/screens/   8 张截图
 docs/checks/    四条命令日志与 AC 机器可读证据
 ```
 
 ## 虚构数据说明
 
-企业名、联系人、顾问姓名、会所编号全部为虚构；`serverDate` 固定为 2026-11-27，倒计时按它换算，避免本地时钟影响口径。
+企业名、联系人、顾问姓名、会所编号全部为虚构。
+
+mock 的基准时间只在 `src/mocks/config.ts` 一处解析：默认取运行当天 12:00（`serverDate` 随之变化），需要固定口径时可设环境变量 `VITE_MOCK_DATE=2026-11-27` 再构建；生产代码（`src/api`、`src/pages`、`src/components`、`src/features`）不引用 `src/mocks`，也不含该环境变量，这一层隔离由 `safety-mock-isolation` 测试守着。

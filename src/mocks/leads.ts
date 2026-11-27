@@ -1,7 +1,8 @@
 import type { Advisor, Channel, LeadRow, SpaceType, Stage } from '../api/types';
+import { MOCK_NOW, MOCK_SERVER_DATE } from './config';
 
-/** mock 的服务端基准日：倒计时一律按它计算，避免本地日期影响口径 */
-export const SERVER_DATE = '2026-11-27';
+/** 服务端基准日（由 mock 时钟得出，可用 VITE_MOCK_DATE 钉住） */
+export const SERVER_DATE = MOCK_SERVER_DATE;
 
 export const SUPERVISOR: Advisor = { id: 'u-9001', name: '罗清晏', siteIds: ['S-01', 'S-02', 'S-03'] };
 
@@ -91,14 +92,16 @@ const SPEC: RowSpec[] = [
 ];
 
 function isoAt(daysAgo: number, hour: number, minute: number): string {
-  const base = new Date(2026, 10, 27, hour, minute, 0, 0);
+  const base = new Date(MOCK_NOW.getTime());
   base.setDate(base.getDate() - daysAgo);
+  base.setHours(hour, minute, 0, 0);
   return base.toISOString();
 }
 
 function isoRecycle(daysLeft: number): string {
-  const base = new Date(2026, 10, 27, 23, 59, 0, 0);
+  const base = new Date(MOCK_NOW.getTime());
   base.setDate(base.getDate() + daysLeft);
+  base.setHours(23, 59, 0, 0);
   return base.toISOString();
 }
 
