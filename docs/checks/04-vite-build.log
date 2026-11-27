@@ -3,7 +3,7 @@ transforming...
 ✓ 4145 modules transformed.
 rendering chunks...
 computing gzip size...
-dist/index.html                    0.40 kB │ gzip:   0.32 kB
+dist/index.html                    0.41 kB │ gzip:   0.33 kB
 dist/assets/index-CvvFEPiq.css   226.64 kB │ gzip:  24.56 kB
 dist/assets/browser-CNEJHZ_b.js  312.03 kB │ gzip: 104.44 kB
 dist/assets/index-CXlnG6Zi.js    745.99 kB │ gzip: 226.75 kB
@@ -19,4 +19,4 @@ At line:1 char:1
 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-m
 anualchunks
 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
-✓ built in 27.01s
+✓ built in 28.50s

@@ -1,47 +1,52 @@
 ﻿
- RUN  v2.1.9 E:/AI接单/Clawhunt-4/delivery/work/2368/repo
+> clawhunt-2368-leads-list-page@1.0.0 test
+> vitest run
 
-node.exe : (node:41936) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided
+
+ RUN  v2.1.9 E:/AI接单/Clawhunt-4/delivery/work/2368/clean
+
+node.exe : (node:43904) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided
 .
 At line:1 char:1
-+ & "E:\node-v26/node.exe" "E:\node-v26/node_modules/npm/bin/npx-cli.js ...
++ & "E:\node-v26/node.exe" "E:\node-v26/node_modules/npm/bin/npm-cli.js ...
 + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: ((node:41936) Ex...s not provided.:String) [], RemoteException
+    + CategoryInfo          : NotSpecified: ((node:43904) Ex...s not provided.:String) [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
  
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:56924) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:34144) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:57872) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:23144) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:62936) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:18260) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:55072) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:41892) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:49020) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:23032) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:62896) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:3728) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
 (Use `node --trace-warnings ...` to show where the warning was created)
  ✓ src/__tests__/safety-mock-isolation.test.ts (3 tests) 14ms
- ✓ src/__tests__/safety-demo-switch.test.tsx (3 tests) 574ms
-   ✓ 演示开关的安全性：不残留、可自愈、不侵入生产代码 > safety-demo-switch: 错误态提供「关闭演示开关并重试」，一键恢复列表 549ms
- ✓ src/__tests__/ac2-countdown-levels.test.tsx (3 tests) 688ms
-   ✓ AC2 距回收倒计时分级与着色 > ac2-countdown-levels: 列表行按 daysLeft 渲染红色/橙色倒计时文案 468ms
- ✓ src/__tests__/ac1-role-matrix-columns.test.tsx (3 tests) 688ms
-   ✓ AC1 顾问视角与主管视角的列/按钮差异 > ac1-role-matrix-columns: 顾问视角不渲染负责人列与批量转派按钮 448ms
- ✓ src/__tests__/ac3-filters-from-url.test.tsx (4 tests) 973ms
-   ✓ AC3 筛选条件同步 URL 且刷新后从 URL 恢复 > ac3-filters-from-url: 带 query 打开页面，条件既进请求参数也回填到界面控件 416ms
- ✓ src/__tests__/states-loading-empty-error.test.tsx (4 tests) 1590ms
-   ✓ 列表页三态与排序 > states-loading-empty-error: 首屏显示加载骨架，数据到达后消失 444ms
-   ✓ 列表页三态与排序 > states-loading-empty-error: 无结果时显示空状态，可一键清空筛选 306ms
-   ✓ 列表页三态与排序 > states-loading-empty-error: 点击表头切换报备时间排序并写入 URL 593ms
- ✓ src/__tests__/ac4-bulk-partial-failure.test.tsx (3 tests) 3966ms
-   ✓ AC4 批量转派部分失败时逐条展示失败原因 > ac4-bulk-partial-failure: 9 条里 2 条失败，逐条列出企业名与失败原因 1671ms
-   ✓ AC4 批量转派部分失败时逐条展示失败原因 > ac4-bulk-partial-failure: 失败项可单独重试，重试不影响已成功项 1695ms
-   ✓ AC4 批量转派部分失败时逐条展示失败原因 > ac4-bulk-partial-failure: 全部成功时不显示失败明细 593ms
+ ✓ src/__tests__/safety-demo-switch.test.tsx (3 tests) 684ms
+   ✓ 演示开关的安全性：不残留、可自愈、不侵入生产代码 > safety-demo-switch: 错误态提供「关闭演示开关并重试」，一键恢复列表 659ms
+ ✓ src/__tests__/ac2-countdown-levels.test.tsx (3 tests) 797ms
+   ✓ AC2 距回收倒计时分级与着色 > ac2-countdown-levels: 列表行按 daysLeft 渲染红色/橙色倒计时文案 541ms
+ ✓ src/__tests__/ac1-role-matrix-columns.test.tsx (3 tests) 830ms
+   ✓ AC1 顾问视角与主管视角的列/按钮差异 > ac1-role-matrix-columns: 顾问视角不渲染负责人列与批量转派按钮 542ms
+ ✓ src/__tests__/ac3-filters-from-url.test.tsx (4 tests) 1154ms
+   ✓ AC3 筛选条件同步 URL 且刷新后从 URL 恢复 > ac3-filters-from-url: 带 query 打开页面，条件既进请求参数也回填到界面控件 450ms
+   ✓ AC3 筛选条件同步 URL 且刷新后从 URL 恢复 > ac3-filters-from-url: 刷新（卸载后重新挂载、内存态清零）仍按同一 URL 条件请求 310ms
+ ✓ src/__tests__/states-loading-empty-error.test.tsx (4 tests) 1847ms
+   ✓ 列表页三态与排序 > states-loading-empty-error: 首屏显示加载骨架，数据到达后消失 508ms
+   ✓ 列表页三态与排序 > states-loading-empty-error: 无结果时显示空状态，可一键清空筛选 368ms
+   ✓ 列表页三态与排序 > states-loading-empty-error: 点击表头切换报备时间排序并写入 URL 666ms
+ ✓ src/__tests__/ac4-bulk-partial-failure.test.tsx (3 tests) 4248ms
+   ✓ AC4 批量转派部分失败时逐条展示失败原因 > ac4-bulk-partial-failure: 9 条里 2 条失败，逐条列出企业名与失败原因 1884ms
+   ✓ AC4 批量转派部分失败时逐条展示失败原因 > ac4-bulk-partial-failure: 失败项可单独重试，重试不影响已成功项 1810ms
+   ✓ AC4 批量转派部分失败时逐条展示失败原因 > ac4-bulk-partial-failure: 全部成功时不显示失败明细 548ms
 
  Test Files  7 passed (7)
       Tests  23 passed (23)
-   Start at  16:29:01
-   Duration  23.12s (transform 8.06s, setup 2.64s, collect 94.23s, tests 8.49s, environment 3.07s, prepare 579ms)
+   Start at  16:35:50
+   Duration  25.53s (transform 8.37s, setup 2.57s, collect 107.58s, tests 9.57s, environment 3.09s, prepare 530ms)
 
