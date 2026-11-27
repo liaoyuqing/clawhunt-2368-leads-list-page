@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+*.local
+.DS_Store
+docs/logs/*.log
+!docs/logs/.gitkeep
+shots/node_modules/
