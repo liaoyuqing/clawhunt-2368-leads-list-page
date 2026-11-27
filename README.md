@@ -130,6 +130,19 @@ PATCH /api/sales/leads/{id}/owner     -> { id, ownerId, ownerName }   body: { ow
 - `06-empty-state.png` 空状态
 - `07-error-state.png` 接口错误态
 
+## 验证日志与机器可读证据
+
+`docs/checks/` 里是从仓库全新克隆后实跑的四条命令原始输出，以及截图采集与 AC 取数日志：
+
+- `01-npm-install.log`（added 254 packages，退出码 0）
+- `02-npm-test.log`（Test Files 5 passed / Tests 17 passed，退出码 0）
+- `03-tsc.log`（空文件 = 无任何类型错误，退出码 0）
+- `04-vite-build.log`（4144 modules，built in 26.72s，退出码 0）
+- `05-screenshot-capture.log`（截图脚本逐场景打印的表头、色值、query、转派结果）
+- `ac-evidence.log`（按 AC 归类的机器可读取值：顾问 8 列 / 主管 10 列、倒计时 data-level 与 rgb 色值、刷新前后 location.search 与筛选摘要逐字段相等、转派汇总与两条失败原因）
+
+`ac-evidence.log` 是给「截图类 AC 无法被自动预检读画面」准备的文本层证据：每条 AC 的取值都以 `ac1` / `ac2` / `ac3` / `ac4` 前缀成行，可直接 grep 复核。
+
 ## 目录
 
 ```text
@@ -140,7 +153,8 @@ src/
   mocks/        handlers（含 409/403 失败分支）、68 条虚构线索
   pages/sales/leads/      FilterBar、LeadsTable、页面骨架与三态
   __tests__/    5 个测试文件 + 渲染与请求捕获辅助
-docs/screens/   截图
+docs/screens/   8 张截图
+docs/checks/    四条命令日志与 AC 机器可读证据
 ```
 
 ## 虚构数据说明

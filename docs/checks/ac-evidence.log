@@ -1,0 +1,12 @@
+EVIDENCE ac1/ac2/ac3  machine-readable values, captured from built preview at http://localhost:4173/
+ac1 advisor.columns=["企业名","行业","来源","阶段","报备时间↓","最近跟进时间↕","距回收天数","意向工位数"]
+ac1 advisor.column_count=8 has_owner_text=false has_transfer_button=false pick_checkboxes=0
+ac2 advisor.countdown_rows=[{"id":"countdown-L-0001","text":"1 天","level":"danger","color":"rgb(213, 73, 65)"},{"id":"countdown-L-0002","text":"2 天","level":"danger","color":"rgb(213, 73, 65)"},{"id":"countdown-L-0003","text":"3 天","level":"warn","color":"rgb(227, 115, 24)"},{"id":"countdown-L-0004","text":"4 天","level":"warn","color":"rgb(227, 115, 24)"},{"id":"countdown-L-0005","text":"今天到期","level":"danger","color":"rgb(213, 73, 65)"},{"id":"countdown-L-0006","text":"10 天","level":"none","color":"rgba(0, 0, 0, 0.9)"},{"id":"countdown-L-0007","text":"17 天","level":"none","color":"rgba(0, 0, 0, 0.9)"},{"id":"countdown-L-0008","text":"24 天","level":"none","color":"rgba(0, 0, 0, 0.9)"}]
+ac1 supervisor.columns=["","企业名","行业","来源","阶段","报备时间↓","最近跟进时间↕","距回收天数","负责人","意向工位数"]
+ac1 supervisor.column_count=10 has_owner_text=true has_transfer_button=true pick_checkboxes=1 owner_filter=true
+ac3 before_reload={"search":"?stage=qualified,negotiating&source=referral&recycle=soon&size=50&sort=followedAt:asc","summary":"当前筛选：阶段 已确认 / 洽谈中 · 来源 老客户转介 · 即将回收（3 天内） · 每页 50 条","total":"共 2 条线索","rows":2,"stageTags":["已确认","洽谈中"],"recycleChecked":true,"sortActive":["最近跟进时间↑"]}
+ac3 after_reload={"search":"?stage=qualified,negotiating&source=referral&recycle=soon&size=50&sort=followedAt:asc","summary":"当前筛选：阶段 已确认 / 洽谈中 · 来源 老客户转介 · 即将回收（3 天内） · 每页 50 条","total":"共 2 条线索","rows":2,"stageTags":["已确认","洽谈中"],"recycleChecked":true,"sortActive":["最近跟进时间↑"]}
+ac3 identical=true
+ac4 selected=已选 9 条
+ac4 summary=成功 7 条，失败 2 条
+ac4 failure_rows=[{"company":"沐辰新材料","reason":"该线索已被他人转派"},{"company":"承影视觉设计","reason":"目标顾问无该会所权限"}]
